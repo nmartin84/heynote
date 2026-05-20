@@ -6,7 +6,7 @@ permissions:
 
 jobs:
   test:
-    name: Run Playwright Tests
+    name: Run Playwright Tests Again
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v6
