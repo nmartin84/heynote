@@ -70,6 +70,26 @@ const lightTheme = EditorView.theme({
     ".cm-taskmarker-toggle input[type=checkbox]": {
         accentColor: "#1f8deb",
     },
+    ".heynote-mermaid-preview": {
+        background: "rgba(255,255,255,0.88)",
+    },
+    ".heynote-mermaid-preview-body": {
+        background: "rgba(255,255,255,0.58)",
+        color: "rgba(0,0,0,0.58)",
+    },
+    ".heynote-mermaid-status": {
+        color: "rgba(0,0,0,0.58)",
+    },
+    ".heynote-mermaid-action": {
+        background: "#dfe7e2",
+        color: "rgba(0,0,0,0.72)",
+    },
+    ".heynote-mermaid-action:hover:not(:disabled)": {
+        background: "#cfdad4",
+    },
+    ".heynote-mermaid-preview-body.error": {
+        color: "#9b2d2d",
+    },
 })
 
 const highlightStyle = HighlightStyle.define([

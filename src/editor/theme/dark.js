@@ -128,11 +128,23 @@ const darkTheme = EditorView.theme({
         borderTopColor: tooltipBackground,
         borderBottomColor: tooltipBackground
     },
-    '.cm-tooltip-autocomplete': {
-        '& > ul > li[aria-selected]': {
-            backgroundColor: highlightBackground,
-            color: base03
-        }
+    '.cm-tooltip.cm-tooltip-autocomplete': {
+        backgroundColor: '#2c313b',
+        border: '1px solid rgba(255,255,255,0.14)',
+        boxShadow: '0 4px 14px rgba(0,0,0,0.45)',
+    },
+    '.cm-tooltip-autocomplete > ul > li': {
+        color: base04,
+    },
+    '.cm-tooltip-autocomplete > ul > li[aria-selected]': {
+        backgroundColor: '#2f7d59',
+        color: '#fff',
+    },
+    '.cm-tooltip-autocomplete .cm-completionDetail': {
+        color: 'rgba(216,222,233,0.62)',
+    },
+    '.cm-tooltip-autocomplete > ul > li[aria-selected] .cm-completionDetail': {
+        color: 'rgba(255,255,255,0.82)',
     },
     ".heynote-blocks-layer .block-even": {
         background: "#252B37",
@@ -150,6 +162,26 @@ const darkTheme = EditorView.theme({
     },
     '.heynote-math-result-copied': {
         color: "rgba(220,240,230, 1.0)",
+    },
+    ".heynote-mermaid-preview": {
+        background: "rgba(30,34,42,0.9)",
+    },
+    ".heynote-mermaid-preview-body": {
+        background: "rgba(14,18,23,0.42)",
+        color: "rgba(236,239,244,0.78)",
+    },
+    ".heynote-mermaid-status": {
+        color: "rgba(220,240,230,0.86)",
+    },
+    ".heynote-mermaid-action": {
+        background: "#3b4252",
+        color: "rgba(255,255,255,0.86)",
+    },
+    ".heynote-mermaid-action:hover:not(:disabled)": {
+        background: "#4c566a",
+    },
+    ".heynote-mermaid-preview-body.error": {
+        color: "#f0a0a8",
     },
 
     '.cm-highlightSpace': {

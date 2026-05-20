@@ -8,6 +8,7 @@
     import MainMenuButton from "./tabs/MainMenuButton.vue"
     import BufferTree from "./buffer-tree/BufferTree.vue"
     import LibrarySearch from "./library-search/LibrarySearch.vue"
+    import TaskList from "./tasks/TaskList.vue"
 
 
     export default {
@@ -15,6 +16,7 @@
             MainMenuButton,
             BufferTree,
             LibrarySearch,
+            TaskList,
         },
 
         data() {
@@ -128,16 +130,27 @@
         <div class="left-panel-content">
             <BufferTree v-if="currentLeftPanel == 'buffer-tree'" />
             <LibrarySearch v-if="currentLeftPanel == 'search'" />
+            <TaskList v-if="currentLeftPanel == 'tasks'" />
         </div>
         <div class="left-panel-tab-buttons">
             <button
                 @click="() => currentLeftPanel='buffer-tree'"
                 :class="{selected:currentLeftPanel=='buffer-tree'}"
-            ><i class="icon buffers"></i>Buffers</button>
+                aria-label="Buffers"
+                title="Buffers"
+            ><i class="icon buffers"></i></button>
             <button
                 @click="() => currentLeftPanel='search'"
                 :class="{selected:currentLeftPanel=='search'}"
-            ><i class="icon search"></i>Search</button>
+                aria-label="Search"
+                title="Search"
+            ><i class="icon search"></i></button>
+            <button
+                @click="() => currentLeftPanel='tasks'"
+                :class="{selected:currentLeftPanel=='tasks'}"
+                aria-label="Tasks"
+                title="Tasks"
+            ><i class="icon tasks"></i></button>
         </div>
         <div
             :class="resizerClass"
@@ -182,18 +195,25 @@
             +dark-mode
                 background: #282828
             button
-                width: 50%
+                flex: 1 1 0
+                min-width: 0
                 background: none
                 border: none
                 //border-radius: 3px 3px 0 0
-                padding: 5px 8px 6px 8px
+                padding: 5px 4px 6px 4px
                 margin-right: 0px
                 color: rgba(0,0,0, 0.6)
                 cursor: pointer
                 font-size: 12px
+                white-space: nowrap
+                overflow: hidden
+                text-overflow: ellipsis
                 position: relative
                 top: -1px
                 border-top: 1px solid transparent
+                display: flex
+                align-items: center
+                justify-content: center
                 +dark-mode
                     color: rgba(255,255,255, 0.6)
                 &:focus
@@ -219,7 +239,7 @@
                     height: 12px
                     background-size: 100%
                     background-repeat: no-repeat
-                    margin-right: 5px
+                    margin-right: 0
                     position: relative
                     top: 1px
                     &.buffers
@@ -233,6 +253,25 @@
                         top: 2px
                         +dark-mode
                             background-image: url('@/assets/icons/search-dark.svg')
+                    &.tasks
+                        width: 13px
+                        height: 13px
+                        top: 2px
+                        border: 1px solid currentColor
+                        border-radius: 2px
+                        box-sizing: border-box
+                        background-image: none
+                        opacity: 0.85
+                        &::after
+                            content: ""
+                            position: absolute
+                            left: 3px
+                            top: 0px
+                            width: 4px
+                            height: 8px
+                            border: solid currentColor
+                            border-width: 0 2px 2px 0
+                            transform: rotate(45deg)
         
         .resizer
             position: absolute

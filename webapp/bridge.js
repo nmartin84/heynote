@@ -335,6 +335,21 @@ const Heynote = {
         },
     },
 
+    diagram: {
+        async saveSvg({ defaultPath, svg }) {
+            const blob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" })
+            const url = URL.createObjectURL(blob)
+            const link = document.createElement("a")
+            link.href = url
+            link.download = defaultPath || "mermaid-diagram.svg"
+            document.body.appendChild(link)
+            link.click()
+            link.remove()
+            window.setTimeout(() => URL.revokeObjectURL(url), 1000)
+            return link.download
+        },
+    },
+
     mainProcess: {
         on(event, callback) {
             ipcRenderer.on(event, callback)

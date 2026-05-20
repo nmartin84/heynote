@@ -13,12 +13,13 @@ export const autoSaveContent = (editor, interval) => {
         class {
             update(update) {
                 if (update.docChanged) {
-                    const initialSetContent = update.transactions.flatMap(t => t.annotations).some(a => a.value === SET_CONTENT)
-                    if (!initialSetContent) {
-                        save()
-                    }
+                const initialSetContent = update.transactions.flatMap(t => t.annotations).some(a => a.value === SET_CONTENT)
+                if (!initialSetContent) {
+                    editor.notesStore.notifyTaskListChanged()
+                    save()
                 }
             }
+        }
         }
     )
 }

@@ -125,6 +125,13 @@ export function openLibrarySearch(editor) {
     }
 }
 
+export function toggleReferencesPanel(editor) {
+    return (view) => {
+        useHeynoteStore().toggleReferencesPanel()
+        return true
+    }
+}
+
 const nothing = (view) => {
     return true
 }
@@ -174,6 +181,7 @@ const HEYNOTE_COMMANDS = {
     unfoldBlock: cmd(unfoldBlock, "Block", "Unfold block"),
     toggleBlockFold: cmd(toggleBlockFold, "Block", "Toggle block fold"),
     toggleLeftPanel: cmd(toggleLeftPanel, "Editor", "Toggle left sidebar panel", global),
+    toggleReferencesPanel: cmd(toggleReferencesPanel, "Editor", "Toggle references panel", global),
     openBufferExplorer: cmd(openBufferExplorer, "Buffer", "Open buffer explorer", global),
     openLibrarySearch: cmd(openLibrarySearch, "Search", "Open library search", global),
 

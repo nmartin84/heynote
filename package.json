@@ -74,6 +74,7 @@
     "fs-jetpack": "^5.1.0",
     "heynote-lang-mathjs": "^1.0.1",
     "lezer-elixir": "^1.1.2",
+    "mermaid": "^11.15.0",
     "patch-package": "^8.0.1",
     "prettier": "^3.3.2",
     "primevue": "^4.3.3",

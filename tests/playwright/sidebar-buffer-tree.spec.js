@@ -46,6 +46,12 @@ test.describe("sidebar buffer tree", () => {
     test("renders tree and toggles folders", async ({ page }) => {
         const tree = page.locator(".buffer-tree")
         await expect(tree).toBeVisible()
+        await expect(page.locator(".left-panel-tab-buttons button")).toHaveCount(3)
+        await expect(page.getByRole("button", { name: "Buffers" })).toBeVisible()
+        await expect(page.getByRole("button", { name: "Search" })).toBeVisible()
+        await expect(page.getByRole("button", { name: "Tasks" })).toBeVisible()
+        await expect(page.getByRole("button", { name: "References" })).toHaveCount(0)
+        await expect(page.locator(".left-panel-tab-buttons button", { hasText: "Buffers" })).toHaveCount(0)
 
         await expect(page.locator(".buffer-tree .buffer", { hasText: "Scratch" })).toBeVisible()
         await expect(page.locator(".buffer-tree .buffer", { hasText: "Root Note" })).toBeVisible()

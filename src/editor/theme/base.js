@@ -138,8 +138,111 @@ export const heynoteBase = EditorView.theme({
     '.heynote-math-result-copied.fade-out': {
         opacity: 0,
     },
-    '.heynote-link': {
+    '.cm-line.heynote-mermaid-source-line': {
+        width: "calc(50% - 24px)",
+        maxWidth: "calc(50% - 24px)",
+        boxSizing: "border-box",
+        paddingRight: "12px",
+    },
+    '.heynote-mermaid-spacer': {
+        width: "calc(50% - 24px)",
+    },
+    '.heynote-mermaid-preview-layer': {
+        width: "100%",
+        pointerEvents: "none",
+    },
+    '.heynote-mermaid-preview': {
+        boxSizing: "border-box",
+        display: "flex",
+        flexDirection: "column",
+        gap: "4px",
+        padding: "4px 8px 8px 12px",
+        overflow: "hidden",
+        pointerEvents: "auto",
+        fontFamily: "var(--system-font)",
+        fontSize: "12px",
+        borderLeft: "1px solid rgba(128,128,128,0.32)",
+    },
+    '.heynote-mermaid-toolbar': {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "flex-end",
+        gap: "4px",
+        minHeight: "24px",
+        flex: "0 0 auto",
+    },
+    '.heynote-mermaid-status': {
+        marginRight: "auto",
+        overflow: "hidden",
+        textOverflow: "ellipsis",
+        whiteSpace: "nowrap",
+    },
+    '.heynote-mermaid-action': {
+        border: "none",
+        borderRadius: "3px",
+        padding: "3px 8px",
+        fontSize: "11px",
+        lineHeight: "16px",
+        cursor: "pointer",
+        whiteSpace: "nowrap",
+    },
+    '.heynote-mermaid-action:disabled': {
+        cursor: "default",
+        opacity: 0.5,
+    },
+    '.heynote-mermaid-preview-body': {
+        flex: "1 1 auto",
+        minHeight: 0,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        overflow: "auto",
+        borderRadius: "4px",
+        padding: "8px",
+        boxSizing: "border-box",
+        textAlign: "center",
+        whiteSpace: "pre-wrap",
+    },
+    '.heynote-mermaid-preview-body svg': {
+        maxWidth: "100%",
+        maxHeight: "100%",
+        height: "auto",
+    },
+    '.heynote-mermaid-preview-body.error': {
+        alignItems: "flex-start",
+        justifyContent: "flex-start",
+        textAlign: "left",
+        fontFamily: "var(--system-font)",
+        fontSize: "11px",
+    },
+    '.heynote-link, .heynote-buffer-link': {
         textDecoration: "underline",
+    },
+    '.cm-tooltip.cm-tooltip-autocomplete': {
+        backgroundColor: '#fff',
+        border: '1px solid rgba(0,0,0,0.16)',
+        borderRadius: '4px',
+        boxShadow: '0 4px 14px rgba(0,0,0,0.16)',
+        overflow: 'hidden',
+    },
+    '.cm-tooltip-autocomplete > ul': {
+        fontFamily: 'var(--system-font)',
+        fontSize: '12px',
+        padding: '4px 0',
+    },
+    '.cm-tooltip-autocomplete > ul > li': {
+        color: 'rgba(0,0,0,0.82)',
+        padding: '4px 9px',
+    },
+    '.cm-tooltip-autocomplete > ul > li[aria-selected]': {
+        backgroundColor: '#48b57e',
+        color: '#fff',
+    },
+    '.cm-tooltip-autocomplete .cm-completionDetail': {
+        color: 'rgba(0,0,0,0.55)',
+    },
+    '.cm-tooltip-autocomplete > ul > li[aria-selected] .cm-completionDetail': {
+        color: 'rgba(255,255,255,0.85)',
     },
     '.heynote-color-preview': {
         display: "inline-block",

@@ -24,6 +24,7 @@ import { autoSaveContent } from "./save.js"
 import { imageExtension } from "./image/image.js"
 import { todoCheckboxPlugin} from "./todo-checkbox.ts"
 import { links } from "./links.js"
+import { bufferLinkCompletions } from "./buffer-link-completion.js"
 import { colorPreviewExtension } from "./color-preview.js"
 import { indentation } from "./indentation.js"
 import { HEYNOTE_COMMANDS } from "./commands.js";
@@ -136,7 +137,8 @@ export class HeynoteEditor {
                 //markdown({addKeymap: false}),
                 Prec.highest(cmKeymap.of(markdownKeymap)),
 
-                links,
+                links(this),
+                bufferLinkCompletions(this),
                 this.colorPreviewCompartment.of(colorPreviewEnabled ? colorPreviewExtension : []),
 
                 this.spellcheckCompartment.of(spellcheckConfig(this.spellcheckEnabled)),
@@ -240,6 +242,7 @@ export class HeynoteEditor {
                 },
                 annotations: [heynoteEvent.of(SET_CONTENT), Transaction.addToHistory.of(false)],
             })
+            this.notesStore.notifyTaskListChanged()
 
             // Ensure we have a parsed syntax tree when buffer is loaded. This prevents errors for large buffers
             // when moving the cursor to the end of the buffer when the program starts

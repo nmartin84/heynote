@@ -6,6 +6,16 @@ import vue from '@vitejs/plugin-vue'
 import * as child from "child_process";
 import pkg from '../package.json'
 
+function getGitHash() {
+    try {
+        return child.execSync('git rev-parse --short HEAD', {
+            stdio: ["ignore", "pipe", "ignore"],
+        }).toString().trim()
+    } catch {
+        return "unknown"
+    }
+}
+
 const middleware = () => {
     return {
         name: 'middleware',
@@ -54,7 +64,7 @@ export default defineConfig({
 
     define: {
         '__APP_VERSION__': JSON.stringify(pkg.version),
-        '__GIT_HASH__': JSON.stringify(child.execSync('git rev-parse --short HEAD').toString().trim()),
+        '__GIT_HASH__': JSON.stringify(getGitHash()),
         '__TESTS__': process.env.HEYNOTE_TESTS,
     },
 })

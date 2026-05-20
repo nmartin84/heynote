@@ -5,6 +5,7 @@ import { syntaxTreeAvailable } from "@codemirror/language"
 import { useHeynoteStore } from "../../stores/heynote-store.js"
 import { heynoteEvent, LANGUAGE_CHANGE, CURSOR_CHANGE, SET_CONTENT, UPDATE_CREATED, ADD_NEW_BLOCK } from "../annotation.js";
 import { mathBlock } from "./math.js"
+import { mermaidBlock } from "./mermaid.js"
 import { emptyBlockSelected } from "./select-all.js";
 import { firstBlockDelimiterSize, getBlocksFromSyntaxTree, getBlocksFromString, getBlockDelimiter } from "./block-parsing.js";
 
@@ -451,6 +452,7 @@ export const noteBlockExtension = (editor) => {
         emitCursorChange(editor),
         updateCreatedOnEmptyBlock(),
         mathBlock,
+        mermaidBlock,
         emptyBlockSelected,
     ]
 }

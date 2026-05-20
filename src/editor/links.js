@@ -1,5 +1,7 @@
-import { Decoration, EditorView, ViewPlugin, ViewUpdate } from "@codemirror/view"
-import { MatchDecorator, WidgetType } from "@codemirror/view"
+import { Decoration, ViewPlugin } from "@codemirror/view"
+import { MatchDecorator } from "@codemirror/view"
+
+import { resolveBufferLinkTarget } from "../common/references.js"
 
 
 const modChar = window.heynote.platform.isMac ? "⌘" : "Ctrl"
@@ -15,7 +17,20 @@ const linkMatcher = new MatchDecorator({
     },
 })
 
-export const links = ViewPlugin.fromClass(class {
+const bufferLinkMatcher = new MatchDecorator({
+    regexp: /\[\[([^\]\n]+)\]\]/g,
+    decoration: match => {
+        return Decoration.mark({
+            class: "heynote-buffer-link",
+            attributes: {
+                title: `${modChar} + Click to open buffer link`,
+                "data-buffer-link-target": match[1],
+            },
+        })
+    },
+})
+
+const externalLinks = ViewPlugin.fromClass(class {
     links
 
     constructor(view) {
@@ -39,3 +54,36 @@ export const links = ViewPlugin.fromClass(class {
         }
     },
 })
+
+const bufferLinks = (editor) => ViewPlugin.fromClass(class {
+    links
+
+    constructor(view) {
+        this.links = bufferLinkMatcher.createDeco(view)
+    }
+    update(update) {
+        this.links = bufferLinkMatcher.updateDeco(update, this.links)
+    }
+}, {
+    decorations: instance => instance.links,
+    eventHandlers: {
+        click: (e, view) => {
+            const target = e.target.closest(".heynote-buffer-link")
+            if (!target?.classList.contains("heynote-buffer-link") || !e[eventKeyModAttribute]) {
+                return
+            }
+
+            const linkTarget = target.dataset.bufferLinkTarget
+            const targetPath = resolveBufferLinkTarget(linkTarget, editor.notesStore.buffers)
+            if (targetPath) {
+                e.preventDefault()
+                editor.notesStore.openBuffer(targetPath)
+            }
+        }
+    },
+})
+
+export const links = (editor) => [
+    externalLinks,
+    bufferLinks(editor),
+]

@@ -47,11 +47,14 @@ export const useHeynoteStore = defineStore("heynote", {
         drawImageId: null,
 
         showLeftPanel: window.heynote.settings.showLeftPanel ?? true,
+        showReferencesPanel: false,
         leftPanelWidth: window.heynote.settings.leftPanelWidth ?? DEFAULT_LEFT_PANEL_WIDTH,
         currentLeftPanel: "buffer-tree",
         hideLeftPanelOnLibrarySearchEscape: false,
         librarySearchFocusRequestId: 0,
         bufferTreeFocusRequestId: 0,
+        taskListRefreshId: 0,
+        referenceListRefreshId: 0,
         focusBufferTreeOnMount: false,
         isFullscreen: false,
         isFocused: true,
@@ -85,6 +88,14 @@ export const useHeynoteStore = defineStore("heynote", {
 
         toggleLeftPanel() {
             this.setLeftPanelVisible(!this.showLeftPanel, true)
+        },
+
+        setReferencesPanelVisible(visible) {
+            this.showReferencesPanel = visible
+        },
+
+        toggleReferencesPanel() {
+            this.setReferencesPanelVisible(!this.showReferencesPanel)
         },
 
         openBufferExplorer() {
@@ -128,6 +139,11 @@ export const useHeynoteStore = defineStore("heynote", {
             const focusEditor = this.focusEditorOnBufferOpen
             this.focusEditorOnBufferOpen = true
             return focusEditor
+        },
+
+        notifyTaskListChanged() {
+            this.taskListRefreshId++
+            this.referenceListRefreshId++
         },
 
         openBuffer(path, options = {}) {

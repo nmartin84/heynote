@@ -41,6 +41,7 @@
                 "currentLanguageAuto",
                 "currentCreatedTime",
                 "systemLocale",
+                "showReferencesPanel",
             ]),
             ...mapState(useSettingsStore, [
                 "spellcheckEnabled",
@@ -110,6 +111,13 @@
             @click.stop="$emit('toggleLeftPanel')"
             class="status-block sidebar clickable"
             :title="getTooltip('Toggle Sidebar', 'toggleLeftPanel')"
+        >
+            <span class="icon icon-format"></span>
+        </div>
+        <div
+            @click.stop="$emit('toggleReferencesPanel')"
+            :class="{ 'status-block': true, references: true, clickable: true, active: showReferencesPanel }"
+            :title="getTooltip('Toggle References', 'toggleReferencesPanel')"
         >
             <span class="icon icon-format"></span>
         </div>
@@ -246,6 +254,31 @@
                 background-repeat: no-repeat
                 background-position: center center
                 background-image: url("@/assets/icons/sidebar.svg")
+
+        .references
+            padding-top: 0
+            padding-bottom: 0
+            &.active
+                background-color: rgba(255,255,255, 0.14)
+            .icon
+                position: relative
+                background-image: none
+                &::before,
+                &::after
+                    content: ""
+                    position: absolute
+                    width: 9px
+                    height: 5px
+                    border: 1.5px solid currentColor
+                    border-radius: 6px
+                    transform: rotate(-35deg)
+                    box-sizing: border-box
+                &::before
+                    left: 0px
+                    top: 7px
+                &::after
+                    right: 0px
+                    top: 11px
         
         .format
             padding-top: 0

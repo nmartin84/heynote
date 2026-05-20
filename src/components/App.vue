@@ -23,6 +23,7 @@
     import TabBar from './tabs/TabBar.vue'
     import DrawImageModal from './draw/DrawImageModal.vue'
     import LeftPanel from './LeftPanel.vue'
+    import ReferenceList from './ReferenceList.vue'
 
     export default {
         components: {
@@ -37,6 +38,7 @@
             TabBar,
             DrawImageModal,
             LeftPanel,
+            ReferenceList,
         },
 
         data() {
@@ -144,6 +146,7 @@
                 "drawImageUrl",
                 "drawImageId",
                 "showLeftPanel",
+                "showReferencesPanel",
                 "isFullscreen",
             ]),
             ...mapState(useSettingsStore, [
@@ -181,6 +184,8 @@
                 "deleteBuffer",
                 "deleteDirectory",
                 "focusEditor",
+                "toggleReferencesPanel",
+                "setReferencesPanelVisible",
             ]),
 
             // Used as a watcher for the booleans that control the visibility of editor dialogs. 
@@ -249,6 +254,11 @@
                 this.focusEditor()
             },
 
+            toggleReferencesPanel() {
+                this.heynoteStore.executeCommand("toggleReferencesPanel")
+                this.focusEditor()
+            },
+
             onMoveCurrentBlockToOtherEditor(path) {
                 this.editorCacheStore.moveCurrentBlockToOtherEditor(path)
                 this.closeMoveToBufferSelector()
@@ -304,6 +314,12 @@
                 />
             </div>
         </div>
+        <ReferenceList
+            v-if="showReferencesPanel"
+            bottomPanel
+            class="references-panel"
+            @close="setReferencesPanelVisible(false)"
+        />
         <StatusBar 
             :autoUpdate="settings.autoUpdate"
             :allowBetaVersions="settings.allowBetaVersions"
@@ -314,6 +330,7 @@
             @toggleSpellcheck="toggleSpellcheck"
             @toggleAlwaysOnTop="toggleAlwaysOnTop"
             @toggleLeftPanel="toggleLeftPanel"
+            @toggleReferencesPanel="toggleReferencesPanel"
             @click="() => {$refs.editor.focus()}"
             class="status" 
         />
@@ -375,8 +392,11 @@
         width: 100%
         height: 100%
         position: relative
+        display: flex
+        flex-direction: column
         .main-container
-            height: calc(100% - var(--status-bar-height))
+            flex: 1 1 auto
+            min-height: 0
             display: flex
             flex-direction: row
             .editor-container
@@ -385,17 +405,19 @@
                 flex-grow: 1
                 .editor
                     height: 100%
+        .references-panel
+            height: 210px
+            flex: 0 0 210px
+            min-height: 120px
         .overlay
             .popup
                 position: absolute
                 top: var(--tab-bar-height)
                 left: 0
                 right: 0
-                bottom: 0
+                bottom: var(--status-bar-height)
         .status
-            position: absolute
-            bottom: 0
-            left: 0
+            flex: 0 0 var(--status-bar-height)
 
         &.left-panel-visible
             .main-container .editor-container .editor

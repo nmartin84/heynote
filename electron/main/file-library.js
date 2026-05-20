@@ -450,6 +450,27 @@ export function setupFileLibraryEventHandlers() {
     ipcMain.handle("library:saveImage", async (event, blob) => {
         return await library.saveImage(blob)
     })
+
+    ipcMain.handle("diagram:saveSvg", async (event, {defaultPath, svg}) => {
+        if (typeof svg !== "string" || svg.trim() === "") {
+            return
+        }
+
+        const result = await dialog.showSaveDialog({
+            title: "Save Mermaid Diagram",
+            defaultPath: join(app.getPath("downloads"), basename(defaultPath || "mermaid-diagram.svg")),
+            filters: [
+                { name: "SVG Image", extensions: ["svg"] },
+                { name: "All Files", extensions: ["*"] },
+            ],
+        })
+        if (result.canceled || !result.filePath) {
+            return
+        }
+
+        await fs.promises.writeFile(result.filePath, svg, "utf8")
+        return result.filePath
+    })
 }
 
 

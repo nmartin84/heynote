@@ -145,6 +145,12 @@ contextBridge.exposeInMainWorld("heynote", {
         pathSeparator: sep,
     },
 
+    diagram: {
+        async saveSvg({ defaultPath, svg }) {
+            return await ipcRenderer.invoke("diagram:saveSvg", { defaultPath, svg })
+        },
+    },
+
     settings: CONFIG.get("settings"),
     
     setSettings(settings) {
