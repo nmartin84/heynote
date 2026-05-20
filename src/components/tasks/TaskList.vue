@@ -631,12 +631,11 @@
         .task
             cursor: pointer
             display: flex
-            align-items: center
+            align-items: flex-start
             gap: 0
             line-height: 1.5
             padding: 2px 10px 2px 34px
-            white-space: nowrap
-            overflow: hidden
+            white-space: normal
             position: relative
             color: rgba(0,0,0, 0.72)
             +dark-mode
@@ -685,8 +684,8 @@
                         outline-offset: 2px
             .text
                 min-width: 0
-                overflow: hidden
-                text-overflow: ellipsis
+                overflow-wrap: anywhere
+                word-break: normal
             .markdown-link
                 text-decoration: underline
                 text-underline-position: under

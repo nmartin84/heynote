@@ -118,4 +118,24 @@ test.describe("sidebar tasks", () => {
         await expect(page.locator(".task-list-container .task", { hasText: "Live task from editor" })).toBeVisible()
         await expect(page.locator(".task-list-container .task", { hasText: "Scratch open task" })).toHaveCount(0)
     })
+
+    test("wraps long task text", async ({ page }) => {
+        const longTask = "This is a long markdown task that should wrap across multiple lines in the left panel instead of being hidden behind an ellipsis"
+        const updatedScratch = createBufferContent("Scratch", markdownBlock([
+            `- [ ] ${longTask}`,
+        ]))
+
+        await page.evaluate(async (content) => {
+            await window._heynote_editor.setContent(content)
+        }, updatedScratch)
+
+        const task = page.locator(".task-list-container .task", { hasText: longTask })
+        await expect(task).toBeVisible()
+
+        const wraps = await task.evaluate((element) => {
+            const lineHeight = parseFloat(getComputedStyle(element).lineHeight)
+            return element.getBoundingClientRect().height > lineHeight * 1.8
+        })
+        expect(wraps).toBe(true)
+    })
 })
